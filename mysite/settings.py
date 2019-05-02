@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import json
+
+# load in config information
+config = []
+with open('config.json') as json_file:
+    config = json.load(json_file)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -72,11 +78,14 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE':       config['database']['engine'],
+        'NAME':         config['database']['name'],
+        'USER':         config['database']['user'],
+        'PASSWORD':     config['database']['password'],
+        'HOST':         config['database']['host'],
+        'PORT':         config['database']['port']
     }
 }
 
