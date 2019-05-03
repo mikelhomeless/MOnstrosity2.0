@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Coach(models.Model):
     coachid = models.AutoField(db_column='CoachID', primary_key=True)
     firstname = models.CharField(db_column='FirstName', max_length=45)
@@ -23,7 +22,7 @@ class CoachTeams(models.Model):
 
 class Game(models.Model):
     gameid = models.AutoField(db_column='GameID', primary_key=True)
-    date = models.CharField(db_column='Date', max_length=10)  
+    date = models.CharField(db_column='Date', max_length=10)
     hometeam = models.ForeignKey('Team', models.DO_NOTHING, db_column='HomeTeam')
     visitingteam = models.ForeignKey('Team', models.DO_NOTHING, db_column='VisitingTeam')
     homescore = models.IntegerField(db_column='HomeScore')
