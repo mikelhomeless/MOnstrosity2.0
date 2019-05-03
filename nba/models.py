@@ -23,8 +23,8 @@ class CoachTeams(models.Model):
 class Game(models.Model):
     gameid = models.AutoField(db_column='GameID', primary_key=True)
     date = models.CharField(db_column='Date', max_length=10)
-    hometeam = models.ForeignKey('Team', models.DO_NOTHING, db_column='HomeTeam')
-    visitingteam = models.ForeignKey('Team', models.DO_NOTHING, db_column='VisitingTeam')
+    hometeam = models.ForeignKey('Team', models.DO_NOTHING, db_column='HomeTeam', related_name='home')
+    visitingteam = models.ForeignKey('Team', models.DO_NOTHING, db_column='VisitingTeam', related_name='visiting')
     homescore = models.IntegerField(db_column='HomeScore')
     visitingscore = models.IntegerField(db_column='VisitingScore')
     seasonid = models.ForeignKey('Season', models.DO_NOTHING, db_column='SeasonID')
@@ -48,8 +48,8 @@ class PlayerGameStats(models.Model):
     sp = models.IntegerField(db_column='SP')
     fgm = models.IntegerField(db_column='FGM')
     fga = models.IntegerField(db_column='FGA')
-    number_3pm = models.IntegerField(db_column='3PM')   Field renamed because it wasn't a valid Python identifier.
-    number_3pa = models.IntegerField(db_column='3PA')   Field renamed because it wasn't a valid Python identifier.
+    tpm = models.IntegerField(db_column='3PM')
+    tpa = models.IntegerField(db_column='3PA')
     ftm = models.IntegerField(db_column='FTM')
     fta = models.IntegerField(db_column='FTA')
     orb = models.IntegerField(db_column='ORB')
