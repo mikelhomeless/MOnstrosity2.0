@@ -1,9 +1,12 @@
-{% if team_list %}
-    <ul>
-    {% for team in team_list %}
-        <li><a href="{% url 'team' team.teamname %}">{{ team }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No teams are available.</p>
-{% endif %}
+{% extends "nba/base.html" %}
+{% block context %}
+  {% if team_list %}
+      <ul>
+      {% for team in team_list %}
+          <li><a href="{% url 'team' team.teamname %}">{{ team }}</a></li>
+      {% endfor %}
+      </ul>
+  {% else %}
+      <p>No teams are available.</p>
+  {% endif %}
+{% endblock context %}
