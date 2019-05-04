@@ -21,6 +21,12 @@ with open('config.json') as json_file:
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+my_app_less = os.path.join(BASE_DIR, 'my_app', 'static', 'less')
+
+import twitter_bootstrap
+bootstrap_less = os.path.join(os.path.dirname(twitter_bootstrap.__file__), 'static', 'less')
+
+PIPELINE_LESS_ARGUMENTS = u'--include-path={}'.format(os.pathsep.join([bootstrap_less, my_app_less]))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -64,6 +70,10 @@ PIPELINE_JS = {
         'output_filename': 'js/b.js',
     },
 }
+
+PIPELINE_COMPILERS = (
+    'pipeline.compliers.less.LessCompiler'
+)
 
 # Application definition
 
