@@ -1,5 +1,5 @@
 {% extends "nba/base.html" %}
-{% block context %}
+{% block content %}
   {% if team_list %}
       <ul>
       {% for team in team_list %}
@@ -9,4 +9,4 @@
   {% else %}
       <p>No teams are available.</p>
   {% endif %}
-{% endblock context %}
+{% endblock content %}
