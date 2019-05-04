@@ -5,6 +5,9 @@ class Coach(models.Model):
     firstname = models.CharField(db_column='FirstName', max_length=45)
     lastname = models.CharField(db_column='LastName', max_length=45)
 
+    def __str__(self):
+        return self.lastname + ", " + self.firstname
+
     class Meta:
         db_table = 'coach'
 
@@ -15,6 +18,9 @@ class CoachTeams(models.Model):
     teamname = models.ForeignKey('Team', models.DO_NOTHING, db_column='TeamName')
     startdate = models.CharField(db_column='StartDate', max_length=10)
     enddate = models.CharField(db_column='EndDate', max_length=10)
+
+    def __str__(self):
+        return "{} - {}".format(self.coachid, self.teamname)
 
     class Meta:
         db_table = 'coach_teams'
@@ -29,6 +35,9 @@ class Game(models.Model):
     visitingscore = models.IntegerField(db_column='VisitingScore')
     seasonid = models.ForeignKey('Season', models.DO_NOTHING, db_column='SeasonID')
 
+    def __str__(self):
+        return "{}: {} vs. {}".format(self.date, self.hometeam, self.visitingteam)
+
     class Meta:
         db_table = 'game'
 
@@ -37,6 +46,9 @@ class Player(models.Model):
     playerid = models.AutoField(db_column='PlayerID', primary_key=True)
     firstname = models.CharField(db_column='FirstName', max_length=40)
     lastname = models.CharField(db_column='LastName', max_length=40, blank=True, null=True)
+
+    def __str__(self):
+        return self.lastname + ", " + self.firstname
 
     class Meta:
         db_table = 'player'
@@ -61,6 +73,9 @@ class PlayerGameStat(models.Model):
     pf = models.IntegerField(db_column='PF')
     gameid = models.ForeignKey(Game, models.DO_NOTHING, db_column='GameID')
 
+    def __str__(self):
+        return "{} - {}".format(self.playerid, self.gameid)
+
     class Meta:
         db_table = 'player_game_stats'
 
@@ -71,6 +86,9 @@ class PlayerSeason(models.Model):
     seasonid = models.ForeignKey('Season', models.DO_NOTHING, db_column='SeasonID')
     salary = models.DecimalField(db_column='Salary', max_digits=12, decimal_places=2)
 
+    def __str__(self):
+        return "{} - {}".format(self.playerid, self.playerid)
+
     class Meta:
         db_table = 'player_season'
 
@@ -78,6 +96,9 @@ class PlayerSeason(models.Model):
 class Season(models.Model):
     seasonid = models.AutoField(db_column='SeasonID', primary_key=True)
     seasonyears = models.CharField(db_column='SeasonYears', unique=True, max_length=45)
+
+    def __str__(self):
+        return self.seasonyears
 
     class Meta:
         db_table = 'season'
@@ -88,6 +109,9 @@ class Team(models.Model):
     city = models.CharField(db_column='City', max_length=50)
     conference = models.CharField(db_column='Conference', max_length=4)
     division = models.CharField(db_column='Division', max_length=9)
+
+    def __str__(self):
+        return self.teamname
 
     class Meta:
         db_table = 'team'
