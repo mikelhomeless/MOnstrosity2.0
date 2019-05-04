@@ -41,8 +41,8 @@ class Player(models.Model):
     class Meta:
         db_table = 'player'
 
-
-class PlayerGameStats(models.Model):
+class PlayerGameStat(models.Model):
+    id = models.AutoField(db_column='id', primary_key=True)
     playerid = models.ForeignKey(Player, models.DO_NOTHING, db_column='PlayerID')
     playerteam = models.ForeignKey('Team', models.DO_NOTHING, db_column='PlayerTeam')
     sp = models.IntegerField(db_column='SP')
