@@ -2,11 +2,34 @@ from django.contrib import admin
 
 from .models import *
 
-admin.site.register(Game)
-admin.site.register(Player)
-admin.site.register(Coach)
-admin.site.register(CoachTeams)
-admin.site.register(PlayerGameStat)
-admin.site.register(PlayerSeason)
-admin.site.register(Season)
-admin.site.register(Team)
+@admin.register(Game)
+class GameAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Coach)
+class CoachAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(CoachTeams)
+class CoachTeamsAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(PlayerGameStat)
+class PlayerGameStatAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(PlayerSeason)
+class PlayerSeasonAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Season)
+class SeasonAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    pass

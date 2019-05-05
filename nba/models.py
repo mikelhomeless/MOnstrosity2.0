@@ -50,6 +50,10 @@ class Player(models.Model):
     def __str__(self):
         return self.lastname + ", " + self.firstname
 
+    @property
+    def team(self):
+        return self.playergamestat_set.last().playerteam.teamname
+
     class Meta:
         db_table = 'player'
 
