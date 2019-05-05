@@ -1,0 +1,120 @@
+{% extends "nba/base.html" %}
+{% block content %}
+{% if player %}
+<div class="container">
+    <p class="lead">
+        <h1 class="display-4">{{ player }}</h1>
+    </p>
+
+    <h3>Per Game</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Season</th>
+                <th>Team</th>
+                <th><a data-toggle="tooltip" title="Games Played">GP</a></th>
+                <th><a data-toggle="tooltip" title="Average Field Goals Made per Game">FGM</a></th>
+                <th><a data-toggle="tooltip" title="Average Field Goals Attempted per Game">FGA</a></th>
+                <th><a data-toggle="tooltip" title="Average Three Pointers Made per Game">3PM</a></th>
+                <th><a data-toggle="tooltip" title="Average Three Pointers Attempted per Game">3PA</a></th>
+                <th><a data-toggle="tooltip" title="Average Free Throws Made per Game">FTM</a></th>
+                <th><a data-toggle="tooltip" title="Average Free Throws Attempted per Game">FTA</a></th>
+                <th><a data-toggle="tooltip" title="Average Offensive Rebounds per Game">ORB</a></th>
+                <th><a data-toggle="tooltip" title="Average Defensive Rebounds per Game">DRB</a></th>
+                <th><a data-toggle="tooltip" title="Average Assists per Game">AST</a></th>
+                <th><a data-toggle="tooltip" title="Average Steals per Game">STL</a></th>
+                <th><a data-toggle="tooltip" title="Average Blocks per Game">BLK</a></th>
+                <th><a data-toggle="tooltip" title="Average Turn Overs per Game">TO</a></th>
+                <th><a data-toggle="tooltip" title="Average Personal Fouls per Game">PF</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for season, stats in season_stats.items %}
+            <tr>
+                <td>{{ stats.season }}</td>
+                <td>{{ stats.team }}</td>
+                <td>{{ stats.games_played }}</td>
+                <td>{{ stats.fgm }}</td>
+                <td>{{ stats.fga }}</td>
+                <td>{{ stats.tpm }}</td>
+                <td>{{ stats.tpa }}</td>
+                <td>{{ stats.ftm }}</td>
+                <td>{{ stats.fta }}</td>
+                <td>{{ stats.orb }}</td>
+                <td>{{ stats.drb }}</td>
+                <td>{{ stats.ast }}</td>
+                <td>{{ stats.stl }}</td>
+                <td>{{ stats.blk }}</td>
+                <td>{{ stats.to }}</td>
+                <td>{{ stats.pf }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Games</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th><a data-toggle="tooltip" title="Field Goals Made">FGM</a></th>
+                <th><a data-toggle="tooltip" title="Field Goals Attempted">FGA</a></th>
+                <th><a data-toggle="tooltip" title="Three Pointers Made">3PM</a></th>
+                <th><a data-toggle="tooltip" title="Three Pointers Attempted">3PA</a></th>
+                <th><a data-toggle="tooltip" title="Free Throws Made">FTM</a></th>
+                <th><a data-toggle="tooltip" title="Free Throws Attempted">FTA</a></th>
+                <th><a data-toggle="tooltip" title="Offensive Rebounds">ORB</a></th>
+                <th><a data-toggle="tooltip" title="Defensive Rebounds">DRB</a></th>
+                <th><a data-toggle="tooltip" title="Assists">AST</a></th>
+                <th><a data-toggle="tooltip" title="Steals">STL</a></th>
+                <th><a data-toggle="tooltip" title="Blocks">BLK</a></th>
+                <th><a data-toggle="tooltip" title="Turn Overs">TO</a></th>
+                <th><a data-toggle="tooltip" title="Personal Fouls">PF</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player_game_stat in games %}
+            <tr>
+                <td><a href="{% url 'game' player_game_stat.gameid.gameid %}">{{ player_game_stat.gameid }}</a></td>
+                <td>{{ player_game_stat.fgm }}</td>
+                <td>{{ player_game_stat.fga }}</td>
+                <td>{{ player_game_stat.tpm }}</td>
+                <td>{{ player_game_stat.tpa }}</td>
+                <td>{{ player_game_stat.ftm }}</td>
+                <td>{{ player_game_stat.fta }}</td>
+                <td>{{ player_game_stat.orb }}</td>
+                <td>{{ player_game_stat.drb }}</td>
+                <td>{{ player_game_stat.ast }}</td>
+                <td>{{ player_game_stat.stl }}</td>
+                <td>{{ player_game_stat.blk }}</td>
+                <td>{{ player_game_stat.to }}</td>
+                <td>{{ player_game_stat.pf }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if games.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ games.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ games.number }} of {{ games.paginator.num_pages }}.
+            </span>
+    
+            {% if games.has_next %}
+                <a href="?page={{ games.next_page_number }}">next</a>
+                <a href="?page={{ games.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+
+{% else %}
+<p>Player is not available.</p>
+{% endif %}
+{% endblock content%}

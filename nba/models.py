@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 
 class Coach(models.Model):
     coachid = models.AutoField(db_column='CoachID', primary_key=True)

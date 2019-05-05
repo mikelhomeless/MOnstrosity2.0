@@ -1,27 +1,49 @@
 {% extends "nba/base.html" %}
 {% block content %}
-  {% if game_list %}
+  {% if games %}
   <div class="container">
     <table class="table">
       <thead>
         <tr>
-          <th>HomeTeam</th>
-          <th>VisitingTeam</th>
+          <th>Home Team</th>
+          <th>Home Score</th>
+          <th>Visiting Team</th>
+          <th>Visiting Score</th>
           <th>Date</th>
           <th>Season</th>
         </tr>
       </thead>
       <tbody>
-        {% for game in game_list %}
+        {% for game in games %}
             <tr>
               <td><a href="{% url 'team' game.hometeam %}">{{ game.hometeam }}</a></td>
+              <td>{{ game.homescore }}</td>
               <td><a href="{% url 'team' game.visitingteam %}">{{ game.visitingteam }}</a></td>
+              <td>{{ game.visitingscore }}</td>
               <td>{{ game.date }}</td>
               <td>{{ game.seasonid }}</td>
             </tr>
         {% endfor %}
       </tbody>
     </table>
+
+    <div class="pagination">
+      <span class="step-links">
+          {% if games.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ games.previous_page_number }}">previous</a>
+          {% endif %}
+  
+          <span class="current">
+              Page {{ games.number }} of {{ games.paginator.num_pages }}.
+          </span>
+  
+          {% if games.has_next %}
+              <a href="?page={{ games.next_page_number }}">next</a>
+              <a href="?page={{ games.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+      </span>
+    </div>
   </div>
   {% else %}
       <p>No games are available.</p>
