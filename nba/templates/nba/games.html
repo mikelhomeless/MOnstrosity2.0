@@ -1,11 +1,28 @@
 {% extends "nba/base.html" %}
 {% block content %}
   {% if game_list %}
-      <ul>
-      {% for game in game_list %}
-          <li><a href="{% url 'game' game.gameid %}">{{ game }}</a></li>
-      {% endfor %}
-      </ul>
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>HomeTeam</th>
+          <th>VisitingTeam</th>
+          <th>Date</th>
+          <th>Season</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in game_list %}
+            <tr>
+              <td><a href="{% url 'team' game.hometeam %}">{{ game.hometeam }}</a></td>
+              <td><a href="{% url 'team' game.visitingteam %}">{{ game.visitingteam }}</a></td>
+              <td>{{ game.date }}</td>
+              <td>{{ game.seasonid }}</td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
   {% else %}
       <p>No games are available.</p>
   {% endif %}

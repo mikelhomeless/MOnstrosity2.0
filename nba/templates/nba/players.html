@@ -1,12 +1,25 @@
 {% extends "nba/base.html" %}
-{% block context %}
+{% block content %}
   {% if player_list %}
-      <ul>
-      {% for player in player_list %}
-          <li><a href="{% url 'player' player.playerid %}">{{ player }}</a></li>
-      {% endfor %}
-      </ul>
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Player Name</th>
+            <th>Team</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for player in player_list %}
+              <tr>
+                <td><a href="{% url 'player' player.playerid %}">{{ player }}</a></td>
+                <td><a href="{% url 'team' player.team %}">{{ player.team }}</a></td>
+              </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
   {% else %}
       <p>No players are available.</p>
   {% endif %}
-{% endblock context %}
+{% endblock content %}
