@@ -1,0 +1,103 @@
+{% extends "nba/base.html" %}
+{% block content %}
+  {% if team %}
+    <div class="container">
+
+      <span class="lead">
+          <h1 class="display-4">{{ team }}</h1>
+      </span>
+
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4>Stats</h4></div>
+        <div class="panel-body">
+          <div id="stats">
+            <table class='table table-bordered'>
+              <thead>
+                  <tr>
+                      <th>Season</th>
+                      <th><a data-toggle="tooltip" title="Average Field Goals Made per Game">FGM</a></th>
+                      <th><a data-toggle="tooltip" title="Average Field Goals Attempted per Game">FGA</a></th>
+                      <th><a data-toggle="tooltip" title="Average Three Pointers Made per Game">3PM</a></th>
+                      <th><a data-toggle="tooltip" title="Average Three Pointers Attempted per Game">3PA</a></th>
+                      <th><a data-toggle="tooltip" title="Average Free Throws Made per Game">FTM</a></th>
+                      <th><a data-toggle="tooltip" title="Average Free Throws Attempted per Game">FTA</a></th>
+                      <th><a data-toggle="tooltip" title="Average Offensive Rebounds per Game">ORB</a></th>
+                      <th><a data-toggle="tooltip" title="Average Defensive Rebounds per Game">DRB</a></th>
+                      <th><a data-toggle="tooltip" title="Average Assists per Game">AST</a></th>
+                      <th><a data-toggle="tooltip" title="Average Steals per Game">STL</a></th>
+                      <th><a data-toggle="tooltip" title="Average Blocks per Game">BLK</a></th>
+                      <th><a data-toggle="tooltip" title="Average Turn Overs per Game">TO</a></th>
+                      <th><a data-toggle="tooltip" title="Average Personal Fouls per Game">PF</a></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>{{ season }}</td>
+                      <td>{{ season_stats.fgm }}</td>
+                      <td>{{ season_stats.fga }}</td>
+                      <td>{{ season_stats.tpm }}</td>
+                      <td>{{ season_stats.tpa }}</td>
+                      <td>{{ season_stats.ftm }}</td>
+                      <td>{{ season_stats.fta }}</td>
+                      <td>{{ season_stats.orb }}</td>
+                      <td>{{ season_stats.drb }}</td>
+                      <td>{{ season_stats.ast }}</td>
+                      <td>{{ season_stats.stl }}</td>
+                      <td>{{ season_stats.blk }}</td>
+                      <td>{{ season_stats.to }}</td>
+                      <td>{{ season_stats.pf }}</td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+
+        <div class='panel panel-default'>
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" href="#roster">Players</a>
+            </h4>
+          </div>
+            <div id="roster" class="panel-collapse collapse">
+              <table class='table'>
+                {% for player in players %}
+                  <tr>
+                    <td><a href="{% url 'player' player.playerid %}">{{ player }}</a></td>
+                  </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+
+        <div class='panel panel-default'>
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" href="#coaches">Coaches</a>
+            </h4>
+          </div>
+          <div id="coaches" class="panel-collapse collapse">
+            <table class='table'>
+              <thead>
+                <tr>
+                  <th>Coach</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for coach in coaches %}
+                  <tr>
+                    <td>{{ coach.coachid }}</td>
+                    <td>{{ coach.startdate }}</td>
+                    <td>{{ coach.enddate }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+  {% else %}
+  {% endif %}
+{% endblock content%}
