@@ -52,8 +52,9 @@ class Player(models.Model):
         return self.lastname + ", " + self.firstname
 
     @property
-    def team(self):
-        return self.playergamestat_set.last().playerteam.teamname
+    def teamname(self):
+        stat = self.playergamestat_set.prefetch_related('playerteam').last()
+        return stat.playerteam.teamname
 
     class Meta:
         db_table = 'player'
@@ -114,6 +115,18 @@ class Team(models.Model):
     city = models.CharField(db_column='City', max_length=50)
     conference = models.CharField(db_column='Conference', max_length=4)
     division = models.CharField(db_column='Division', max_length=9)
+
+    def players(self, season):
+        ids = PlayerGameStat.objects.filter(
+            gameid__in=Game.objects.filter(seasonid=season),
+            playerteam=self.teamname
+        ).values('playerid').distinct()
+        return [Player.objects.get(playerid = x['playerid']) for x in ids]
+
+    def seasonal_stats(self, season):
+        STAT_FIELDS = ['fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'orb', 'drb', 'ast', 'stl', 'blk', 'to', 'pf']
+        seasonal_games = self.playergamestat_set.filter(gameid__in=Game.objects.filter(seasonid=season))
+        return { k: seasonal_games.aggregate(Avg(k))["{}__avg".format(k)] for k in STAT_FIELDS }
 
     def __str__(self):
         return self.teamname

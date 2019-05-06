@@ -13,7 +13,7 @@
           {% for player in players %}
               <tr>
                 <td><a href="{% url 'player' player.playerid %}">{{ player }}</a></td>
-                <td><a href="{% url 'team' player.team %}">{{ player.team }}</a></td>
+                <td><a href="{% url 'team' player.teamname %}">{{ player.teamname }}</a></td>
               </tr>
           {% endfor %}
         </tbody>
@@ -25,11 +25,11 @@
                 <a href="?page=1">&laquo; first</a>
                 <a href="?page={{ players.previous_page_number }}">previous</a>
             {% endif %}
-    
+
             <span class="current">
                 Page {{ players.number }} of {{ players.paginator.num_pages }}.
             </span>
-    
+
             {% if players.has_next %}
                 <a href="?page={{ players.next_page_number }}">next</a>
                 <a href="?page={{ players.paginator.num_pages }}">last &raquo;</a>

@@ -25,7 +25,7 @@ def players(request):
 
 # A view for each player
 def player(request, player_id):
-    player = Player.objects.get(playerid=player_id)    
+    player = Player.objects.get(playerid=player_id)
 
     # List all of the games, 10 at a time
     games_list = player.playergamestat_set.order_by('-gameid__date')
@@ -61,7 +61,7 @@ def player(request, player_id):
         season_stats[season]['blk'] = round(games_stats_list.aggregate(Avg('blk'))['blk__avg'], 2)
         season_stats[season]['to'] = round(games_stats_list.aggregate(Avg('to'))['to__avg'], 2)
         season_stats[season]['pf'] = round(games_stats_list.aggregate(Avg('pf'))['pf__avg'], 2)
-    
+
     context = {
         'player': player,
         'games': games,
@@ -96,5 +96,13 @@ def teams(request):
 
 # A view for each game
 def team(request, team_name):
+    season = Season.objects.last()
     team = Team.objects.get(teamname=team_name)
-    return HttpResponse("{}".format(team))
+    context = {
+        'team': team,
+        'players': team.players(season.seasonid),
+        'season_stats': team.seasonal_stats(season.seasonid),
+        'season': season,
+        'coaches': team.coachteams_set.all()
+    }
+    return render(request, 'nba/team.html', context)
